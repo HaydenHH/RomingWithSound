@@ -319,8 +319,11 @@ const App = createApp({
             !audio.playing() && audio?.play()
         },
         switchAndPlay:function(){
+            const audio = this.audios[this.activeAudio]
+            audio.playing()&&audio.pause()
             this.activeAudio = Math.random()>0.5?0:1
             this.playAudio()
+            
         },
         changeAudio: function () {
             this.audios[this.activeAudio]?.seek(this.audioProgress)
