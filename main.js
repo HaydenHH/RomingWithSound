@@ -138,7 +138,7 @@ class SoundIcon {
         this.dom.style.left = Math.random() * window.innerWidth + 'px'
         document.querySelector('#container').appendChild(this.dom)
         this.dom.addEventListener('click', () => {
-            Math.random() > 0.8 ? document.querySelector('#page2').classList.toggle('show') : document.querySelector('#page3').classList.toggle('show')
+            Math.random() > 0.3 ? document.querySelector('#page2').classList.toggle('show') : document.querySelector('#page3').classList.toggle('show')
         })
 
     }
@@ -187,7 +187,7 @@ function initMap() {
 
     this.map = new TMap.Map(document.querySelector('#container'), {
         center: center,//设置地图中心点坐标
-        zoom: 17.2,   //设置地图缩放级别
+        zoom: 17,   //设置地图缩放级别
         pitch: 0,  //设置俯仰角
         rotation: 0,   //设置地图旋转角度
         viewMode: '2D',
@@ -314,8 +314,13 @@ const App = createApp({
             this.map.panTo(pos, { duration: 3000 })
         },
         playAudio: function () {
-            const audio = this.audios[Math.random()>0.5?0:1]
+            
+            const audio = this.audios[this.activeAudio]
             !audio.playing() && audio?.play()
+        },
+        switchAndPlay:function(){
+            this.activeAudio = Math.random()>0.5?0:1
+            this.playAudio()
         },
         changeAudio: function () {
             this.audios[this.activeAudio]?.seek(this.audioProgress)
@@ -364,7 +369,7 @@ const App = createApp({
             src: ['长录音.mp3']
         });
         this.audios.push(audio1,audio2)
-        this.activeAudio = 0
+        this.activeAudio = 1
 
         setInterval(() => {
             const activeAudio = this.audios[this.activeAudio]
