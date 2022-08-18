@@ -138,7 +138,7 @@ class SoundIcon {
         this.dom.style.left = Math.random() * window.innerWidth + 'px'
         document.querySelector('#container').appendChild(this.dom)
         this.dom.addEventListener('click', () => {
-            Math.random() > 0.5 ? document.querySelector('#page2').classList.toggle('show') : document.querySelector('#page3').classList.toggle('show')
+            Math.random() > 0.8 ? document.querySelector('#page2').classList.toggle('show') : document.querySelector('#page3').classList.toggle('show')
         })
 
     }
