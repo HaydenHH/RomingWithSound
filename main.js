@@ -131,14 +131,21 @@ function getPath(pos, map) {
 }
 
 class SoundIcon {
+    
     constructor() {
         this.dom = document.createElement('img')
-        this.dom.src = './img/soundIcon.png'
+        if(Math.random()>0.5){
+            this.dom.src = './img/soundIcon.png'
+            this.type=0
+        }else{
+            this.dom.src = './img/soundIcon2.svg'
+            this.type=1
+        }
         this.dom.className = 'sound-icon'
         this.dom.style.left = Math.random() * window.innerWidth + 'px'
         document.querySelector('#container').appendChild(this.dom)
         this.dom.addEventListener('click', () => {
-            Math.random() > 0.3 ? document.querySelector('#page2').classList.toggle('show') : document.querySelector('#page3').classList.toggle('show')
+            this.type===0 ? document.querySelector('#page2').classList.toggle('show') : document.querySelector('#page3').classList.toggle('show')
         })
 
     }
@@ -313,18 +320,15 @@ const App = createApp({
             this.direction = this.routes[this.activeStep].dir_desc
             this.map.panTo(pos, { duration: 3000 })
         },
-        playAudio: function () {
+        playAudio: function (index) {
             
             const audio = this.audios[this.activeAudio]
-            !audio.playing() && audio?.play()
+            audio&&audio.pause()
+            this.activeAudio=index
+            const audioNew = this.audios[this.activeAudio]
+            !audioNew.playing() && audioNew?.play()
         },
-        switchAndPlay:function(){
-            const audio = this.audios[this.activeAudio]
-            audio.playing()&&audio.pause()
-            this.activeAudio = Math.random()>0.5?0:1
-            this.playAudio()
-            
-        },
+      
         changeAudio: function () {
             this.audios[this.activeAudio]?.seek(this.audioProgress)
         },

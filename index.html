@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roaming With Sound</title>
     <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
-    <script src="https://unpkg.com/vue@3"></script>
+    <!-- <script src="https://unpkg.com/vue@3"></script> -->
+    <script src="./vue.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/fetch-jsonp/1.2.1/fetch-jsonp.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/gsap/3.10.4/gsap.js"></script>
 <!--引入Javascript API GL，参数说明参见下文-->
@@ -19,6 +20,10 @@
 <body>
     <div id="app">
         <div id="container" ref="container"></div>
+        <div id="tapeTip">
+            <div><span class="tape1"></span> Long Recordings</div>
+            <div><span class="tape2"></span> Short Recordings</div>
+        </div>
         <div id="navigatorControl">
             <div id="navigatorControl-nav">
                 <ul>
@@ -56,7 +61,7 @@
                             <span>WenHao</span>
                         </div>
                         <div class="sound-control">
-                            <button class="sound-control-btn" @click="playAudio"></button>
+                            <button class="sound-control-btn" @click="playAudio(0)"></button>
                             
                             <span>Play</span>
                         </div>
@@ -83,7 +88,7 @@
             </footer>
         </div>
 
-        <div  class="page" id="page3" @click="switchAndPlay">
+        <div  class="page" id="page3" @click="playAudio(1)">
             <header class="sound-header">
                 <span ><img @click="closePage3" style="width: 20px;" src="./img/返回键.svg" alt=""></span>
                 <h3 > Ver. Immersion
