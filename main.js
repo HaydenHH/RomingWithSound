@@ -262,7 +262,7 @@ function initMap() {
 }
 
 
-
+window.onload = () => {
 const { createApp, ref, reactive } = Vue
 const App = createApp({
     setup() {
@@ -389,6 +389,6 @@ const App = createApp({
 })
 
 
-window.onload = () => {
+
     App.mount('#app')
 }
