@@ -24,7 +24,7 @@ myInfoWindow.prototype.createDOM = function () {
     // mydom.innerHTML=this.content;
     mydom.addEventListener("click", () => {
         getPath(this.position, this.map)
-        
+
 
     })
 
@@ -53,12 +53,12 @@ myInfoWindow.prototype.remove = function () {
     this.dom.remove()
 }
 
-function drawPath(path,map) {
-    console.log('这个地图',map);
+function drawPath(path, map) {
+    console.log('这个地图', map);
     // polylineLayer && polylineLayer.remove()
-    console.log('图层',this.polylineLayer);
-        if(this.polylineLayer) this.polylineLayer.setMap(null)
-        this.polylineLayer = new TMap.MultiPolyline({
+    console.log('图层', this.polylineLayer);
+    if (this.polylineLayer) this.polylineLayer.setMap(null)
+    this.polylineLayer = new TMap.MultiPolyline({
         id: 'polyline-layer', //图层唯一标识
         map: map,//设置折线图层显示到哪个地图实例中
         //折线样式定义
@@ -90,30 +90,30 @@ function drawPath(path,map) {
     });
 
     return this.polylineLayer
-    
-    
+
+
 }
 
- function getPath (pos,map) {
+function getPath(pos, map) {
     // const key = 'CFUBZ-CZA3I-XUXGF-5BRY4-EU33F-V2BJT'
     const key = 'CFUBZ-CZA3I-XUXGF-5BRY4-EU33F-V2BJT'
     const from = '23.125219,113.25583'
     const to = String(pos.lat + ',' + pos.lng)
-    console.log('GO TO ',to);
+    console.log('GO TO ', to);
     const url = `https://apis.map.qq.com/ws/direction/v1/walking/?from=${from}&to=${to}&key=${key}&output=jsonp`
     // console.log(url);
     // this.markEnd && this.markEnd.remove()
     // this.markEnd = new myInfoWindow({map:map,position:new TMap.LatLng(pos.lat,pos.lng),content:''})
-    
+
     fetchJsonp(url).then(res => {
 
         return res.json()
-    }).then((resjson,rej) => {
+    }).then((resjson, rej) => {
         console.log(resjson);
-        if(resjson.status==374) return 
+        if (resjson.status == 374) return
         this.routes = resjson?.result?.routes[0]?.steps
-        this.stepsPos = resjson.result?.routes[0]?.polyline 
-        this.activeStep=-1
+        this.stepsPos = resjson.result?.routes[0]?.polyline
+        this.activeStep = -1
         var coors = resjson.result?.routes[0]?.polyline, pl = [];
         //坐标解压（返回的点串坐标，通过前向差分进行压缩，因此需要解压）
         var kr = 1000000;
@@ -124,9 +124,9 @@ function drawPath(path,map) {
         for (var i = 0; i < coors.length; i += 2) {
             pl.push(new TMap.LatLng(coors[i], coors[i + 1]));
         }
-        console.log('path is',pl);
-        this.drawPath(pl,map)//显示路线
-        
+        console.log('path is', pl);
+        this.drawPath(pl, map)//显示路线
+
     })
 }
 
@@ -146,7 +146,7 @@ class SoundIcon {
         // console.log('元素走了');
         // this.ani?.kill()
         // console.log(this.ani);
-        if(this.ani){
+        if (this.ani) {
             gsap.set(this.dom, { y: -100 })
             this.ani.restart()
         }
@@ -182,25 +182,25 @@ let rain
 function initMap() {
     rain = new SoundRain()
     //定义地图中心点坐标
-    var center = new TMap.LatLng(23.125219,113.25583)
-        //定义map变量，调用 TMap.Map() 构造函数创建地图
+    var center = new TMap.LatLng(23.125219, 113.25583)
+    //定义map变量，调用 TMap.Map() 构造函数创建地图
 
     this.map = new TMap.Map(document.querySelector('#container'), {
-            center: center,//设置地图中心点坐标
-            zoom: 17.2,   //设置地图缩放级别
-            pitch: 0,  //设置俯仰角
-            rotation: 0,   //设置地图旋转角度
-            viewMode: '2D',
-            mapStyleId: "style1",
-            baseMap: {			//底图设置（参数为：VectorBaseMap对象）
-                type: 'vector',	//类型：失量底图
-                features: ['base', 'building2d']
-                //仅渲染：道路及底面(base) + 2d建筑物(building2d)，以达到隐藏文字的效果
-            },
-            showControl:false
-        })
-    
-   
+        center: center,//设置地图中心点坐标
+        zoom: 17.2,   //设置地图缩放级别
+        pitch: 0,  //设置俯仰角
+        rotation: 0,   //设置地图旋转角度
+        viewMode: '2D',
+        mapStyleId: "style1",
+        baseMap: {			//底图设置（参数为：VectorBaseMap对象）
+            type: 'vector',	//类型：失量底图
+            features: ['base', 'building2d']
+            //仅渲染：道路及底面(base) + 2d建筑物(building2d)，以达到隐藏文字的效果
+        },
+        showControl: false
+    })
+
+
 
 
 
@@ -212,42 +212,42 @@ function initMap() {
     })
 
     const pos1 = new myInfoWindow({
-        map:this.map,
-        position: new TMap.LatLng(23.115423,113.238235)
+        map: this.map,
+        position: new TMap.LatLng(23.115423, 113.238235)
     })
     const pos2 = new myInfoWindow({
-        map:this.map,
-        position: new TMap.LatLng(39.790166,116.304448)
+        map: this.map,
+        position: new TMap.LatLng(39.790166, 116.304448)
     })
     const pos3 = new myInfoWindow({
-        map:this.map,
-        position: new TMap.LatLng(23.12705,113.24693)
+        map: this.map,
+        position: new TMap.LatLng(23.12705, 113.24693)
     })
     const pos4 = new myInfoWindow({
-        map:this.map,
-        position: new TMap.LatLng(23.121297,113.231472)
+        map: this.map,
+        position: new TMap.LatLng(23.121297, 113.231472)
     })
     const pos5 = new myInfoWindow({
-        map:this.map,
-        position: new TMap.LatLng(23.13286,113.264692)
+        map: this.map,
+        position: new TMap.LatLng(23.13286, 113.264692)
     })
     const pos6 = new myInfoWindow({
-        map:this.map,
-        position: new TMap.LatLng(23.140096,113.265561)
+        map: this.map,
+        position: new TMap.LatLng(23.140096, 113.265561)
     })
     const pos7 = new myInfoWindow({
-        map:this.map,
-        position: new TMap.LatLng(23.120939,113.267678)
+        map: this.map,
+        position: new TMap.LatLng(23.120939, 113.267678)
     })
-  
 
 
-this.map.addListener('click',e=>{
-    console.log(e);
-    this.getPath(e.latLng,this.map)
-    // this.map.panTo(e.latLng,{duration:3000})
-    rain.update()
-})
+
+    this.map.addListener('click', e => {
+        console.log(e);
+        this.getPath(e.latLng, this.map)
+        // this.map.panTo(e.latLng,{duration:3000})
+        rain.update()
+    })
 
 
 
@@ -256,123 +256,123 @@ this.map.addListener('click',e=>{
 
 
 
-const { createApp,ref,reactive } = Vue
+const { createApp, ref, reactive } = Vue
 const App = createApp({
-    setup(){
+    setup() {
         const input = ref(null)
     },
     data() {
         return {
-            page3Show:false,
+            page3Show: false,
             message: 'Hello Vue!',
-            map:null,
-            rain:null,
+            map: null,
+            rain: null,
             // polylineLayer:null,
-            markEnd:null,
-            routes:[],
-            stepsPos:[],
-            activeStep:-1,
-            audios:[],
-            activeAudio:-1,
-            audioProgress:0,
-            direction:''
+            markEnd: null,
+            routes: [],
+            stepsPos: [],
+            activeStep: -1,
+            audios: [],
+            activeAudio: -1,
+            audioProgress: 0,
+            direction: ''
         }
     },
-    methods:{
-        initMap:initMap,
-        getPath:getPath,
-        drawPath:drawPath,
-        showPage2:function(){
+    methods: {
+        initMap: initMap,
+        getPath: getPath,
+        drawPath: drawPath,
+        showPage2: function () {
             document.querySelector('#page2').classList.add('show')
         },
-        closePage2:function() {
+        closePage2: function () {
             document.querySelector('#page2').classList.toggle('show')
         },
-        closePage3:function() {
+        closePage3: function () {
             document.querySelector('#page3').classList.toggle('show')
         },
-        nextStep:function(){
-            (this.routes.length>0&&this.activeStep<this.routes.length-1)&&this.activeStep++
-            
+        nextStep: function () {
+            (this.routes.length > 0 && this.activeStep < this.routes.length - 1) && this.activeStep++
+
             const index = this.routes[this.activeStep].polyline_idx[0]
-            
-         
-            const pos = new TMap.LatLng(this.stepsPos[index],this.stepsPos[index+1])
+
+
+            const pos = new TMap.LatLng(this.stepsPos[index], this.stepsPos[index + 1])
             this.direction = this.routes[this.activeStep].dir_desc
-            this.map.panTo(pos,{duration:3000})
+            this.map.panTo(pos, { duration: 3000 })
             this.rain?.update()
 
             this.changeSoundDir()
-            
+
         },
-        previousStep:function(){
-            this.activeStep>0&&this.activeStep--
+        previousStep: function () {
+            this.activeStep > 0 && this.activeStep--
             const index = this.routes[this.activeStep].polyline_idx[0]
 
-            const pos = new TMap.LatLng(this.stepsPos[index],this.stepsPos[index+1])
+            const pos = new TMap.LatLng(this.stepsPos[index], this.stepsPos[index + 1])
             this.direction = this.routes[this.activeStep].dir_desc
-            this.map.panTo(pos,{duration:3000})
+            this.map.panTo(pos, { duration: 3000 })
         },
-        playAudio:function(){
-            const audio = this.audios[this.activeAudio]
-            !audio.playing()&&audio?.play()
+        playAudio: function () {
+            const audio = this.audios[Math.random()>0.5?0:1]
+            !audio.playing() && audio?.play()
         },
-        changeAudio:function(){
+        changeAudio: function () {
             this.audios[this.activeAudio]?.seek(this.audioProgress)
         },
-        changeSoundDir:function(){
+        changeSoundDir: function () {
             console.log(this.direction);
             let sound = 0
-            switch(this.direction){
+            switch (this.direction) {
                 case '东':
                     sound = 0.7
-                break
+                    break
                 case '南':
                     sound = 0
-                break
+                    break
                 case '西':
                     sound = -0.7
-                break
+                    break
                 case '北':
                     sound = 0
-                break
+                    break
                 case '东北':
                 case '东南':
                     sound = 0.35
-                break
-                
+                    break
+
                 case '西北':
                 case '西南':
                     sound = -0.35
-                break
-                
+                    break
+
             }
             console.log(sound);
             const activeAudio = this.audios[this.activeAudio]
-            if(activeAudio)activeAudio.stereo(sound)
+            if (activeAudio) activeAudio.stereo(sound)
             // activeAudio.pause()
             // activeAudio.play()
         }
     },
-    mounted(){
+    mounted() {
 
         this.initMap()
-        const audio1 =  new Howl({
-            src: ['sound2.mp3']
-          });
-          console.log(audio1);
-        //   audio1.stereo(-1)
-        this.audios.push(audio1)
-        audio1.stereo(1)
-        this.activeAudio=0
-        
-        setInterval(()=>{
+        const audio1 = new Howl({
+            src: ['短录音.mp3']
+        });
+        const audio2 = new Howl({
+            src: ['长录音.mp3']
+        });
+        this.audios.push(audio1,audio2)
+        this.activeAudio = 0
+
+        setInterval(() => {
             const activeAudio = this.audios[this.activeAudio]
-            if(activeAudio.playing()){
-                
+            if (activeAudio.playing()) {
+
                 this.audioProgress = activeAudio.seek()
             }
-        },500)
+        }, 500)
     }
 })
 
