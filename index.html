@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roaming With Sound</title>
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/fetch-jsonp/1.2.1/fetch-jsonp.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/gsap/3.10.4/gsap.js"></script>
+<!--引入Javascript API GL，参数说明参见下文-->
+<script src="https://map.qq.com/api/gljs?v=1.exp&key=VAEBZ-B3T3D-BIU44-PNPOT-CXV2S-JZFC4"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+<script src="./howler.min.js"></script>
+    <script src="./main.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="container" ref="container"></div>
+        <div id="navigatorControl">
+            <div id="navigatorControl-nav">
+                <ul>
+                    <li v-for="(route,index) in routes" v-show="index==activeStep"  >
+                        <!-- {{route.instruction}} -->
+                        {{activeStep+1}}/{{routes.length}}
+                    </li>
+                </ul>
+                <p v-if="routes.length>0&&activeStep==-1" class="absolute">Begin Journey</p>
+            </div>
+            <button @click="routes&&previousStep()">PREVIOUS</button>
+            <button @click="routes&&nextStep()">NEXT</button>
+        </div>
+        <div id="navBottom">
+            <button type="button"><img src="./img/1.png" alt=""></button>
+            <button type="button" @click="showPage2"><img src="./img/2.png" alt=""></button>
+            <button type="button"><img src="./img/3.png" alt=""></button>
+            <button type="button"><img src="./img/4.png" alt=""></button>
+        </div>
+    
+        <div class="page" id="page2">
+            <header class="sound-header">
+                <span><img @click="closePage2" style="width: 20px;" src="./img/返回键.svg" alt=""></span>
+                <h3 > Ver. Immersion
+                </h3>
+                <h5 class="flex"><img  id="loc1" src="./img/loc.svg" alt=""> <p>Enning Road</p></h5>
+            </header>
+            <section class="sound-body">
+                <img style="width: 350px;margin-bottom: 30px;" src="./img/img1.png" alt="">
+                <div>
+                    <div><input placeholder="" ref="input" v-model="audioProgress" @change="changeAudio" step="1" min="0" :max="audios[activeAudio]?._duration||100" type="range"></div>
+                    <nav>
+                        <div class="sound-control">
+                            <img width="50" src="./img/ava_1.png" alt="">
+                            <span>WenHao</span>
+                        </div>
+                        <div class="sound-control">
+                            <button class="sound-control-btn" @click="playAudio"></button>
+                            
+                            <span>Play</span>
+                        </div>
+                        <div class="sound-control">
+                            <button class="sound-control-btn" @click="audios[activeAudio]?.pause()" ></button>
+                            <span>Pause</span>
+                        </div>
+                        <div class="sound-control">
+                            <button class="sound-control-btn"></button>
+                            <span>Like</span>
+                        </div>
+                       
+                    </nav>
+                </div>
+            </section>
+            
+            <footer class="sound-footer">
+                <div class="sound-btn-nav">
+                    <button>Invite others</button>
+                    <button>Supple</button>
+                </div>
+    
+            </footer>
+        </div>
+
+        <div  class="page" id="page3">
+            <header class="sound-header">
+                <span ><img @click="closePage3" style="width: 20px;" src="./img/返回键.svg" alt=""></span>
+                <h3 > Ver. Immersion
+                </h3>
+                <h5 class="flex"><img id="loc2" src="./img/loc.svg" alt=""> <p>Enning Road</p></h5>
+            </header>
+            
+            
+            <footer class="sound-footer">
+                <img src="./img/control.svg" alt="DEVELOPING" >
+                
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
