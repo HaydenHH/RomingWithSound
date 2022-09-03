@@ -1,5 +1,6 @@
 * {
     margin: 0;
+    font-family: sans-serif;
 }
 
 #container {
@@ -67,7 +68,7 @@
 
 .sound-icon{
     position: absolute;
-     width: 50px;
+     width: 80px;
     z-index: 1001;
     top: -100px;
     left: 0;
@@ -115,7 +116,8 @@
     height: 50px;
     border-radius: 50px;
     border: none;
-    background-color: #e08e65;
+    background-color: #954621;
+    
     
 }
 
@@ -125,10 +127,16 @@
 
 
 .sound-control{
+    font-family: sans-serif;
+    
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    span{
+        position: relative;
+        margin-top: 10px;
+    }
 }
 
 .sound-footer{
@@ -292,6 +300,18 @@ input[type=range] {
     }
 
    
+}
+
+#addIcon{
+    position: absolute;
+    right: 5px;
+    top: -20px;
+    font-size: small;
+    color: white;
+    // width: 10px;
+    padding: 1px 4px;
+    background-color: #e08e65;
+    border-radius: 30px;
 }
 
 #loc2{

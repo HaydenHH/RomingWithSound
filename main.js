@@ -54,6 +54,7 @@ myInfoWindow.prototype.remove = function () {
 }
 
 function drawPath(path, map) {
+    this.tapeTipShow=true
     console.log('这个地图', map);
     // polylineLayer && polylineLayer.remove()
     console.log('图层', this.polylineLayer);
@@ -147,6 +148,9 @@ class SoundIcon {
         this.dom.addEventListener('click', () => {
             this.type===0 ? document.querySelector('#page2').classList.toggle('show') : document.querySelector('#page3').classList.toggle('show')
         })
+        this.dom.addEventListener('touchstart', () => {
+            this.type===0 ? document.querySelector('#page2').classList.toggle('show') : document.querySelector('#page3').classList.toggle('show')
+        })
 
     }
     go() {
@@ -174,7 +178,7 @@ class SoundRain {
 
     constructor() {
         this.sounds = []
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 7; i++) {
             this.sounds.push(new SoundIcon())
         }
 
@@ -194,7 +198,7 @@ function initMap() {
 
     this.map = new TMap.Map(document.querySelector('#container'), {
         center: center,//设置地图中心点坐标
-        zoom: 17,   //设置地图缩放级别
+        zoom: 14,   //设置地图缩放级别
         pitch: 0,  //设置俯仰角
         rotation: 0,   //设置地图旋转角度
         viewMode: '2D',
@@ -270,6 +274,7 @@ const App = createApp({
     },
     data() {
         return {
+            tapeTipShow:false,
             page3Show: false,
             message: 'Hello Vue!',
             map: null,
@@ -385,6 +390,10 @@ const App = createApp({
                 this.audioProgress = activeAudio.seek()
             }
         }, 500)
+
+        setInterval(()=>{
+            if (activeAudio&&activeAudio.playing()) activeAudio.stereo(Math.random())
+        },2000)
     }
 })
 
